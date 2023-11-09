@@ -1,4 +1,4 @@
-**** 
+ 
 
 
 ### Ex. No. :8 CONFIGURING ANALOG PORT TO INTEFACE AN ANALOG SENSOR AND READ THE VALUES USING SERIAL PORT
@@ -150,17 +150,60 @@ This module also includes a potentiometer that will fix the threshold value, & t
 
 
 ##  Program 
+~~~
+#include "main.h"
+#include"stdio.h"
+uint32_t adcvalue;
+#if defined (__ICCARM__) || defined (__ARMCC_VERSION)
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#elif defined(__GNUC__)
 
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#endif
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+  MX_ADC1_Init();
+  MX_USART2_UART_Init();
+   while (1)
+  {
+	  HAL_ADC_Start(&hadc1);
+	  			HAL_ADC_PollForConversion(&hadc1,100);
+	  			adcvalue = HAL_ADC_GetValue(&hadc1);
+	  			HAL_ADC_Stop(&hadc1);
+	  			HAL_Delay(500);
+	  			printf("ADC VALUE:%ld\n",adcvalue);
+  }
+  
+}
+PUTCHAR_PROTOTYPE
+{
 
- 
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
 
-## Result :
+  return ch;
+}
+
+~~~
+
  
 ## Output  :
 
 
+# i)
+<img width="828" alt="Screenshot 2023-11-09 at 3 52 47 PM" src="https://github.com/KoduruSanathKumarReddy/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/69503902/bafb4e47-2e00-49ed-a812-cbbb4180481d">
+
+# ii)
+<img width="838" alt="Screenshot 2023-11-09 at 3 53 05 PM" src="https://github.com/KoduruSanathKumarReddy/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/69503902/f05ef7af-2b5f-428d-a39f-753cb94c9392">
 
 
+# ii)
+<img width="830" alt="Screenshot 2023-11-09 at 3 53 17 PM" src="https://github.com/KoduruSanathKumarReddy/Ex.-No.8-CONFIGURING-ANALOG-PORT-TO-INTEFACE-AN-ANALOG-SENSOR-AND-READ-THE-VALUES-USING-SERIAL-PORT/assets/69503902/8f331192-1ec0-41a3-834b-e9eb6795f0dd">
 
 
-****
+## Result :
+ Thus, the configuring analog port to interface an analog sensor and read the values using serial port is successfully executed.
+
+
